@@ -13,6 +13,7 @@ file_name_out = "repeat"
 audio_files = [(folder_name+os.sep+f) for f in os.listdir(folder_name) if Path(f).suffix == file_extension_in]
 audio_files.sort(reverse=True)
 
+
 print('Start creating combined file \n')
 combined_wav = AudioSegment.empty()
 for wav_path in audio_files:
@@ -20,6 +21,9 @@ for wav_path in audio_files:
     original_tags = mediainfo(wav_path)
     wav_chunk_pause = len(wav_chunk) + extra_silence  # length of the chunk + extra silence
     combined_wav += wav_chunk + AudioSegment.silent(wav_chunk_pause)
+if not audio_files:
+    print('no files found')
+    exit()
 
 print('Start export')
 combined_wav.export(
